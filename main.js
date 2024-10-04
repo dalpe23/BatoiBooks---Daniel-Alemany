@@ -1,6 +1,8 @@
 import './style.css'
 import data from './src/services/datos';
-import * as funciones from './src/functions'
+import Books from './src/model/books.class.js';
+import Modules from './src/model/modules.class';
+import Users from './src/model/users.class';
 
 document.querySelector('#app').innerHTML = `
   <div>
@@ -12,12 +14,15 @@ document.querySelector('#app').innerHTML = `
     </p>
   </div>
 `
+let libros = new Books()
+libros.populate(data.books)
 
-let librosUsuario4 = funciones.booksFromUser(data.books, 4);
-console.log(librosUsuario4);
+let modulos = new Modules()
+modulos.populate(data.modules)
 
-let librosModulo5021 = funciones.booksFromModule(data.books, "5021");
-let librosModulo5021Good = funciones.booksWithStatus(librosModulo5021, "good");
+let usuarios = new Users()
+usuarios.populate(data.users);
 
-console.log(librosModulo5021Good);
-funciones.averagePriceOfBooks(data.books);
+console.log(libros.booksFromModule("5021"))
+console.log(libros.booksWithStatus("new"))
+console.log(libros.incrementPriceOfbooks(0.1));

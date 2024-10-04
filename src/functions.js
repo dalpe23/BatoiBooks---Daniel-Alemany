@@ -1,3 +1,4 @@
+//(funciones corregidas en otro fichero)
 function getBookById(arrayLibro, idLibro) {
   let libroADevolver = arrayLibro.find((libro) => libro.id === idLibro);
   if (!libroADevolver) {
@@ -17,12 +18,14 @@ function getBookIndexById(arrayLibro, idLibro) {
 }
 
 function bookExists(arrayLibro, idUsuario, numeroModulo) {
-   let libro = arrayLibro.find(libro => libro.userId === idUsuario && libro.moduleCode === numeroModulo);
-   if(!libro){
-      return false;
-   } else {
-      return true;
-   }
+  let libro = arrayLibro.find(
+    (libro) => libro.userId === idUsuario && libro.moduleCode === numeroModulo
+  );
+  if (!libro) {
+    return false;
+  } else {
+    return true;
+  }
 }
 
 function booksFromUser(arrayLibro, idUsuario) {
@@ -64,13 +67,16 @@ function booksWithStatus(arrayLibro, estado) {
 }
 
 function averagePriceOfBooks(arrayLibro) {
-  let precioADevolver = arrayLibro.reduce((total, libro) => total += libro.price, 0);
+  let precioADevolver = arrayLibro.reduce(
+    (total, libro) => (total += libro.price),
+    0
+  );
   let mediaPrecio = precioADevolver / arrayLibro.length;
   if (arrayLibro.length === 0) {
-   return "0.00 €";
- } else {
-   return mediaPrecio.toFixed(2) + " €";
- }
+    return "0.00 €";
+  } else {
+    return mediaPrecio.toFixed(2) + " €";
+  }
 }
 
 function booksOfTypeNotes(arrayLibro) {
@@ -92,7 +98,9 @@ function booksNotSold(arrayLibro) {
 }
 
 function incrementPriceOfbooks(arrayLibro, porcentaje) {
-  return arrayLibro.map((libro) => libro.price +(libro.price * porcentaje/100));
+  return arrayLibro.map((libro) => ({
+    ...libro, price: Math.round(libro.price * (1 + porcentaje) * 100) / 100
+  }));
 }
 
 function getUserById(arrayUsuarios, idUsuario) {
@@ -106,7 +114,7 @@ function getUserById(arrayUsuarios, idUsuario) {
 
 function getUserIndexById(arrayUsuarios, idUsuario) {
   let usuario = arrayUsuarios.findIndex((usuario) => usuario.id === idUsuario);
-  if (usuario === -1){
+  if (usuario === -1) {
     throw "El usuario no existe";
   } else {
     return usuario;
@@ -114,21 +122,21 @@ function getUserIndexById(arrayUsuarios, idUsuario) {
 }
 
 function getUserByNickName(arrayUsuarios, nombre) {
-   let usuario = arrayUsuarios.find((usuario) => usuario.nick === nombre);
-   if (!usuario) {
-     throw "El usuario no existe";
-   } else {
-     return usuario;
-   }
+  let usuario = arrayUsuarios.find((usuario) => usuario.nick === nombre);
+  if (!usuario) {
+    throw "El usuario no existe";
+  } else {
+    return usuario;
+  }
 }
 
 function getModuleByCode(arrayModulos, codigoModulo) {
-   let modulo = arrayModulos.find((modulo) => modulo.code === codigoModulo);
-   if (!modulo) {
-     throw "El modulo no existe";
-   } else {
-     return modulo;
-   }
+  let modulo = arrayModulos.find((modulo) => modulo.code === codigoModulo);
+  if (!modulo) {
+    throw "El modulo no existe";
+  } else {
+    return modulo;
+  }
 }
 
 export {
