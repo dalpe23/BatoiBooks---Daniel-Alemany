@@ -1,37 +1,51 @@
+import {
+  addDBUser,
+  changeDBUser,
+  changeDBUserPassword,
+  getDBUsers,
+  removeDBUser,
+} from "../services/users.api";
 import User from "./user.class";
+
 export default class Users {
   constructor() {
     this.data = [];
   }
-  populate(users) {
-    for (let i = 0; i < users.length; i++) {
-      this.data[i] = new User(users[i].id, users[i].nick, users[i].email, users[i].password);
-    }
+  async populate() {
+    const usuarios = await getDBUsers();
+
+    this.data = usuarios.map(
+      (item) => new User(item.id, item.nick, item.email, item.password)
+    );
   }
-  addUser(user) {
-    const idNueva = this.data.reduce((maximo, usuario) => (usuario.id > maximo ? usuario.id : maximo),0) + 1;
-    let usuarioAAnadir = new User(idNueva, user.nick, user.email, user.password);
+  async addUser(user) {
+    const usuario = await addDBUser(user);
+    let usuarioAAnadir = new User(
+      usuario.id,
+      usuario.nick,
+      usuario.email,
+      usuario.password
+    );
     this.data.push(usuarioAAnadir);
     return usuarioAAnadir;
   }
-  removeUser(id) {
-    let usuarioEncontrado = this.data.findIndex((usuario) => usuario.id === id);
-    if (usuarioEncontrado == -1) {
-      throw "no se ha encontrado usuario";
-    } else {
-      let borrado = this.data.splice(usuarioEncontrado, 1);
-    }
+  async removeUser(id) {
+    const usuario = await removeDBUser(id);
+    let usuarioEncontrado = this.getUserIndexById(id);
+    this.data.splice(usuarioEncontrado, 1);
+    return usuario;
   }
-  changeUser(user) {
-    let usuarioEncontrado = this.data.findIndex(
-      (usuario) => usuario.id === user.id
+  async changeUser(user) {
+    const usuarioRM = await changeDBUser(user);
+    let posicion = this.getUserIndexById(user.id);
+    let usuarioNuevo = new User(
+      usuarioRM.id,
+      usuarioRM.nick,
+      usuarioRM.email,
+      usuarioRM.password
     );
-    if (usuarioEncontrado == -1) {
-      throw "no se ha encontrado usuario";
-    } else {
-      this.data.splice(usuarioEncontrado, 1, user);
-      return user;
-    }
+    this.data.splice(posicion, 1, usuarioNuevo);
+    return usuarioNuevo;
   }
   toString() {
     let cadenaVacia = "";
@@ -40,7 +54,7 @@ export default class Users {
     });
     return cadenaVacia;
   }
-  //en las funciones me quito el array de datos y el parametro de este, y llamo directamente dentro a this.data
+
   getUserById(idUsuario) {
     let usuario = this.data.find((usuario) => usuario.id === idUsuario);
     if (!usuario) {
@@ -66,5 +80,17 @@ export default class Users {
     } else {
       return usuario;
     }
+  }
+  async changeUserPassword(id, contrasenya) {
+    const usuario = await changeDBUserPassword(id, contrasenya);
+    let posicion = this.getUserIndexById(id);
+    let usuarioNuevo = new User(
+      usuario.id,
+      usuario.nick,
+      usuario.email,
+      contrasenya
+    );
+    this.data.splice(posicion, 1, usuarioNuevo);
+    return usuarioNuevo;
   }
 }

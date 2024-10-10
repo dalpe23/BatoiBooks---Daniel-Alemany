@@ -1,5 +1,4 @@
 import './style.css'
-import data from './src/services/datos';
 import Books from './src/model/books.class.js';
 import Modules from './src/model/modules.class';
 import Users from './src/model/users.class';
@@ -15,14 +14,13 @@ document.querySelector('#app').innerHTML = `
   </div>
 `
 let libros = new Books()
-libros.populate(data.books)
+await libros.populate()
 
 let modulos = new Modules()
-modulos.populate(data.modules)
+await modulos.populate()
 
 let usuarios = new Users()
-usuarios.populate(data.users);
+await usuarios.populate();
 
 console.log(libros.booksFromModule("5021"))
 console.log(libros.booksWithStatus("new"))
-console.log(libros.incrementPriceOfbooks(0.1));
