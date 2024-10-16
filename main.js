@@ -1,26 +1,86 @@
-import './style.css'
-import Books from './src/model/books.class.js';
-import Modules from './src/model/modules.class';
-import Users from './src/model/users.class';
+import "./style.css";
+import batoiLogo from "/logoBatoi.png";
+import Controller from "./src/controller/controller.class";
 
-document.querySelector('#app').innerHTML = `
-  <div>
-      <img src="./public/logoBatoi.png" class="logo" alt="Vite logo" />
-    </a>
+document.querySelector("#app").innerHTML = `
+  <header>
+    <img src="${batoiLogo}" alt="Logo Batoi" />
     <h1>BatoiBooks</h1>
-    <p>
-      Abre la consola para ver el resultado
-    </p>
-  </div>
-`
-let libros = new Books()
-await libros.populate()
+    <h3>Control de libros</h3>
+    </header>
 
-let modulos = new Modules()
-await modulos.populate()
+    <nav>
+      <ul>
+        <li><a href="#list">Ver Libros</a></li>
+        <li><a href="#form">Añadir Libro</a></li>
+        <li><a href="#about">Acerca de...</a></li>
+      </ul>
+    </nav>
+    
+    <div>
+    <div id="list"></div>
+    <div id="form>
+    <div>
+      <label for="id-remove">Id:</label>
+      <input type="number" id="id-remove">
+      <button id="remove">Borrar libro</button>
+    </div>
 
-let usuarios = new Users()
-await usuarios.populate();
+    <form id="bookForm">
+      <div>
+        <label for="id-module">Módulo:</label>
+        <select id="id-module">
+          <option>- Selecciona un módulo -</option>
+        </select>
+      </div>
 
-console.log(libros.booksFromModule("5021"))
-console.log(libros.booksWithStatus("new"))
+      <div>
+        <label for="publisher">Editorial:</label>
+        <input type="text" id="publisher" required>
+      </div>
+
+      <div>
+        <label for="price">Precio:</label>
+        <input type="number" id="price">
+      </div>
+
+      <div>
+        <label for="pages">Páginas:</label>
+        <input type="number" id="pages">
+      </div>
+
+        <div>
+            <label>Estado:</label>
+            <label for="good">
+            <input type="radio" id="good" name="estado" value="good">Good</label>
+            <label for="new">
+            <input type="radio" id="new" name="estado" value="new">New</label>
+            <label for="bad">
+            <input type="radio" id="bad" name="estado" value="bad">Bad</label>
+          </div>
+
+      <div>
+        <label for="comments">Comentarios:</label>
+        <textarea id="comments"></textarea>
+      </div>
+
+      <button type="submit">Añadir</button>
+      <button type="reset">Reset</button>
+
+    </form>
+    <br>
+
+    <div id="about"><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus sunt ratione, delectus sequi nihil cupiditate blanditiis quia dolorum saepe consequuntur, possimus expedita ex rem vero ducimus autem qui dolore nisi?</p></div>
+    
+    </div>
+
+    <footer>
+    Daniel Alemany
+    </footer>
+   
+  
+`;
+document.addEventListener("DOMContentLoaded", () => {
+  const myController = new Controller();
+  myController.init();
+});
