@@ -1,4 +1,3 @@
-
 export default class View {
     constructor(){
         this.bookList = document.getElementById("list");
@@ -6,7 +5,7 @@ export default class View {
         this.remove = document.getElementById("remove")
     }
 
-    renderModulesOptions(modules){
+    renderModulesOptions(modules){ //foreach que carga todas las opciones
         modules.forEach(module => {
         const option = document.createElement("option");
         option.innerHTML = module.cliteral;     
@@ -16,33 +15,43 @@ export default class View {
         });
     }
 
-    renderBook(book){
+    renderBook(book){   //creamos el div lo rellenamos con los datos de book y lo metemos al final de la lista
         const div = document.createElement('div')
-        div.innerHTML += `<h3>Libro: ${book.id}</h3><h3>${book.modulecode}</h3><h3>${book.publisher}</h3><h3>Precio: ${book.price}</h3><h3>Páginas: ${book.pages}</h3><h3>Estado: ${book.status}</h3><h3>Vendido el: ${book.soldDate}</h3><h3>Comentarios: ${book.comments}</h3>`  //ACABAR DE PONER para mostrar
-
-
+        div.innerHTML += `<h1>Libro: ${book.id}</h1><p>Cod. Módulo: ${book.moduleCode}<p><p>Editorial: ${book.publisher}<p><p>Precio: ${book.price}<p><p>Páginas: ${book.pages}<p><p>Estado: ${book.status}<p><p>Vendido el: ${book.soldDate}<p><p>Comentarios: ${book.comments}<p>`
 
         this.bookList.append(div)
     }
 
-    removeBook(bookId){
+    removeBook(bookId){ //busca en el documento el libro con la id que entra y lo elimina de la lista
         const libro = document.getElementById(bookId)
         this.bookList.remove(libro)
     }
 
-    renderMessage(message){
-
+    renderMessage(message, tipo){
+        const mensajes = document.getElementById('messages')
+        mensajes.innerHTML += `<div class="${tipo} alert alert-danger alert-dismissible" role="alert">  ${message}  
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="this.parentElement.remove()">x</button></div>`
     }
 
-    setBookSubmitHandler(callback) {  
+    setBookSubmitHandler(callback) { //coge los datos y los manda a quien le llame(controller)
         this.bookForm.addEventListener('submit', (event) => {
            event.preventDefault()
-           // a continuación recoge los datos del formulario y los guarda en un objeto // por último llama a la función recibida pasándole dicho objeto
-            const publisher = document.getElementById('publisher').value
+           // a continuación recoge los datos del formulario y los guarda en un objeto 
+           // por último llama a la función recibida pasándole dicho objeto
             const price = document.getElementById('price').value
+            const moduleCode = document.getElementById('id-module').value
+            const publisher = document.getElementById('publisher').value
+            const pages = document.getElementById('pages').value
+            const status = document.getElementById('status').value
+            const comments = document.getElementById('comments').value
+
             const book = {
                 publisher: publisher,
-                price: price
+                price: price,
+                moduleCode: moduleCode,
+                pages: pages,
+                status: status,
+                comments: comments         
             }
            callback(book)
         })

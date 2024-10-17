@@ -16,7 +16,7 @@ document.querySelector("#app").innerHTML = `
         <li><a href="#about">Acerca de...</a></li>
       </ul>
     </nav>
-    
+    <div id="messages"></div>
     <div>
     <div id="list"></div>
     <div id="form>
@@ -52,11 +52,11 @@ document.querySelector("#app").innerHTML = `
         <div>
             <label>Estado:</label>
             <label for="good">
-            <input type="radio" id="good" name="estado" value="good">Good</label>
+            <input type="radio" id="status" name="estado" value="good">Good</label>
             <label for="new">
-            <input type="radio" id="new" name="estado" value="new">New</label>
+            <input type="radio" id="status" name="estado" value="new">New</label>
             <label for="bad">
-            <input type="radio" id="bad" name="estado" value="bad">Bad</label>
+            <input type="radio" id="status" name="estado" value="bad">Bad</label>
           </div>
 
       <div>
