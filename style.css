@@ -102,3 +102,7 @@ button:focus-visible {
 .success {
   background-color: green;
 }
+
+.libro {
+  background-color: darkcyan;
+}

@@ -34,7 +34,7 @@ export default class Controller {
         }
     }
 
-    async handleSubmitBook(payload){      //me llega de la vista el objeto con datos y 
+    async handleSubmitBook(payload){      //me llega de la vista el objeto con datos y... 
         try {
             await this.model.books.addBook(payload)       //llamo al metodo del model y modifico la BBDD RECORDAR EL AWAIT PQ SALTA DIRECTO SINO
             //aqui no pongo metodo de la vista para actualizar pq la lista se actualiza sola en el init()

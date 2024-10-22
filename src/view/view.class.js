@@ -9,7 +9,7 @@ export default class View {
         modules.forEach(module => {
         const option = document.createElement("option");
         option.innerHTML = module.cliteral;     
-        
+        option.value = module.code;     //Para que el el moduleCode del objeto sea el value del option
         const select = document.getElementById("id-module");
         select.appendChild(option);
         });
@@ -17,8 +17,8 @@ export default class View {
 
     renderBook(book){   //creamos el div lo rellenamos con los datos de book y lo metemos al final de la lista
         const div = document.createElement('div')
-        div.innerHTML += `<h1>Libro: ${book.id}</h1><p>Cod. Módulo: ${book.moduleCode}<p><p>Editorial: ${book.publisher}<p><p>Precio: ${book.price}<p><p>Páginas: ${book.pages}<p><p>Estado: ${book.status}<p><p>Vendido el: ${book.soldDate}<p><p>Comentarios: ${book.comments}<p>`
-
+        div.innerHTML += `<div class="libro"> <h2>Libro: ${book.id}</h2><p>Cod. Módulo: ${book.moduleCode}<p><p>Editorial: ${book.publisher}<p><p>Precio: ${book.price}<p><p>Páginas: ${book.pages}<p><p>Estado: ${book.status}<p><p>Vendido el: ${book.soldDate}<p><p>Comentarios: ${book.comments}<p> </div>`
+        
         this.bookList.append(div)
     }
 
@@ -29,8 +29,14 @@ export default class View {
 
     renderMessage(message, tipo){
         const mensajes = document.getElementById('messages')
-        mensajes.innerHTML += `<div class="${tipo} alert alert-danger alert-dismissible" role="alert">  ${message}  
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="this.parentElement.remove()">x</button></div>`
+
+        if(tipo === 'success'){             //que si es mensaje de éxito dure 3 segs
+            setTimeout(() => {
+                mensajes.innerHTML = '';
+            }, 3000); 
+        }
+
+        mensajes.innerHTML = `<div class="${tipo} alert alert-danger alert-dismissible" role="alert">  ${message}  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="this.parentElement.remove()">x</button></div>`
     }
 
     setBookSubmitHandler(callback) { //coge los datos y los manda a quien le llame(controller)
@@ -57,7 +63,7 @@ export default class View {
         })
        }
        
-       setBookRemoveHandler(callback) {
+       setBookRemoveHandler(callback) { //coge los datos y los manda a quien le llame(controller)
          this.remove.addEventListener('click', () => {
             const idLibroEliminar = document.getElementById('id-remove').value
             this.removeBook(idLibroEliminar)
