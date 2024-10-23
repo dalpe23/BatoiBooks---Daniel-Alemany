@@ -1,3 +1,5 @@
+import Modules from "../model/modules.class";
+
 export default class View {
     constructor(){
         this.bookList = document.getElementById("list");
@@ -17,7 +19,7 @@ export default class View {
 
     renderBook(book){   //creamos el div lo rellenamos con los datos de book y lo metemos al final de la lista
         const div = document.createElement('div')
-        div.innerHTML += `<div class="libro"> <h2>Libro: ${book.id}</h2><p>Cod. Módulo: ${book.moduleCode}<p><p>Editorial: ${book.publisher}<p><p>Precio: ${book.price}<p><p>Páginas: ${book.pages}<p><p>Estado: ${book.status}<p><p>Vendido el: ${book.soldDate}<p><p>Comentarios: ${book.comments}<p> </div>`
+        div.innerHTML += `<div class="card"> <h2>Libro: ${book.id}</h2><p>Cod. Módulo: ${book.moduleCode}<p><p>Editorial: ${book.publisher}<p><p>Precio: ${book.price}<p><p>Páginas: ${book.pages}<p><p>Estado: ${book.status}<p><p>Vendido el: ${book.soldDate}<p><p>Comentarios: ${book.comments}<p> </div>`
         
         this.bookList.append(div)
     }

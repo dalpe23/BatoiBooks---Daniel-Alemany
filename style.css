@@ -56,7 +56,7 @@ h1 {
 }
 
 .card {
-  padding: 2em;
+  background-color: cadetblue;
 }
 
 .read-the-docs {
@@ -103,6 +103,3 @@ button:focus-visible {
   background-color: green;
 }
 
-.libro {
-  background-color: darkcyan;
-}

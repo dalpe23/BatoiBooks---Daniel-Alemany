@@ -36,8 +36,8 @@ export default class Controller {
 
     async handleSubmitBook(payload){      //me llega de la vista el objeto con datos y... 
         try {
-            await this.model.books.addBook(payload)       //llamo al metodo del model y modifico la BBDD RECORDAR EL AWAIT PQ SALTA DIRECTO SINO
-            //aqui no pongo metodo de la vista para actualizar pq la lista se actualiza sola en el init()
+            let libroARenderizar = await this.model.books.addBook(payload)      //llamo al metodo del model y modifico la BBDD RECORDAR EL AWAIT PQ SALTA DIRECTO SINO
+            this.view.renderBook(libroARenderizar);           //llamo al metodo de la vista una vez va el de BBDD (RENDERIZO EL LIBRO CON ID DE LA BBDD NO EL QUE NO TIENE)
             this.view.renderMessage("Libro añadido correctamente", 'success')
         } catch (error) {
             this.view.renderMessage(error, 'fail')            
